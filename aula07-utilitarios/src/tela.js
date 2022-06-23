@@ -1,7 +1,11 @@
+const util = Util
+
 const ID_CONTEUDO = "conteudo"
 const ID_BOTAO_JOGAR = "startHere"
 const ID_MENSAGEM = "mensagem"
 const CLASSE_INVISIBLE = "invisible"
+const ID_CARREGANDO = "carregando"
+const ID_CONTADOR= "contador"
 const MENSAGENS = {
     sucesso: {
         texto:' Combinação correta!',
@@ -47,7 +51,7 @@ class Tela {
         const elementosHtml =  document.getElementsByName(nomedoHeroi)
         elementosHtml.forEach(item =>(item.src = img))
     }
-    static exibirMensagem(sucesso = true){
+    static async exibirMensagem(sucesso = true){
         const elemento = document.getElementById(ID_MENSAGEM)
         if(sucesso){
             elemento.classList.remove(MENSAGENS.erro.classe)
@@ -60,5 +64,17 @@ class Tela {
             elemento.innerText = MENSAGENS.erro.texto
         }
         elemento.classList.remove(CLASSE_INVISIBLE)
+        await util.timeout(2000)
+        elemento.classList.add(CLASSE_INVISIBLE)
     }
+
+static exibirCarregando(mostrar = true){
+    const carregando = document.getElementById(ID_CARREGANDO)
+    if (mostrar) {
+        carregando.classList.remove(CLASSE_INVISIBLE)
+        return;
+    }
+    carregando.classList.add(CLASSE_INVISIBLE)
+}
+
 }

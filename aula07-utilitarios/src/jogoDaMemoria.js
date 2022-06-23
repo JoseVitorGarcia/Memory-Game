@@ -1,7 +1,8 @@
 class JogoDaMemoria {
 
-    constructor({ tela }) {
+    constructor({ tela , util}) {
         this.tela = tela
+        this.util= util
 
         this.heroisIniciais = [
 
@@ -28,7 +29,7 @@ class JogoDaMemoria {
 
 
 
-    embaralhar() {
+    async embaralhar() {
         const copias = this.heroisIniciais
             .concat(this.heroisIniciais)
 
@@ -37,9 +38,13 @@ class JogoDaMemoria {
             })
             .sort(() => Math.random() - 0.5)
         this.tela.atualizarImagens(copias)
-        setTimeout(() => {
+
+this.tela.exibirCarregando()
+
+        await this.util.timeout(1000)
             this.esconderHerois(copias)
-        }, 1000);
+            this.tela.exibirCarregando(false)
+       
     }
     exibirHeroi(nomedoHeroi){
         const {img} = this.heroisIniciais.find(({nome}) => nomedoHeroi === nome)
